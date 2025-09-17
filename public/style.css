@@ -66,12 +66,37 @@ header {
     border-color: #4a6de5;
 }
 
-.crafting-area > p {
+.crafting-area-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.crafting-area-header > p {
     font-weight: bold;
     font-size: 1.2em;
     margin: 0;
     color: #555;
 }
+
+.clear-btn {
+    padding: 5px 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #fff;
+    background-color: #6c757d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.clear-btn:hover {
+    background-color: #5a6268;
+}
+
 .crafting-area > span {
     color: #777;
 }
@@ -101,6 +126,29 @@ header {
 .element.dragging {
     opacity: 0.5;
     background-color: #cce5ff;
+}
+
+/* Animation for newly discovered elements */
+.element-discovered {
+    animation: discovery-flash 0.7s ease-out;
+}
+
+@keyframes discovery-flash {
+    0% {
+        transform: scale(1);
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    50% {
+        transform: scale(1.1);
+        background-color: #d4edda; /* A light green flash */
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    100% {
+        transform: scale(1);
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
 }
 
 /* --- Element Containers --- */
