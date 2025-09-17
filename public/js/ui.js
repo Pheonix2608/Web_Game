@@ -1,11 +1,17 @@
-import { gameState, checkForCombination, addDiscoveredElement } from './game.js';
+import { gameState, checkForCombination, addDiscoveredElement, loadGameContent, getHint } from './game.js';
 import { loadGame, saveGame } from './api.js';
+
+// --- Audio ---
+const successSound = new Audio('sounds/success.mp3');
+const failSound = new Audio('sounds/fail.mp3');
 
 // --- DOM Elements ---
 const elementsContainer = document.getElementById('elements-container');
 const compendiumContainer = document.getElementById('compendium-container');
 const craftingArea = document.getElementById('crafting-area');
+const discoveryTreeContainer = document.getElementById('discovery-tree-container');
 const clearCraftingBtn = document.getElementById('clear-crafting-btn');
+const hintBtn = document.getElementById('hint-btn');
 
 let draggedElementId = null;
 
@@ -42,6 +48,36 @@ function renderElements() {
         if (element) {
             compendiumContainer.appendChild(createElementDOM(id, element));
         }
+    });
+
+    renderDiscoveryTree();
+}
+
+function renderDiscoveryTree() {
+    discoveryTreeContainer.innerHTML = '';
+    const discoveredRecipes = new Set();
+
+    // Use the recipes from the gameState
+    for (const combination in gameState.recipes) {
+        const resultId = gameState.recipes[combination];
+        if (gameState.discovered.has(resultId)) {
+            const [el1, el2] = combination.split('+');
+            const sortedKey = [el1, el2].sort().join('+');
+            discoveredRecipes.add(`${sortedKey}=${resultId}`);
+        }
+    }
+
+    discoveredRecipes.forEach(recipeString => {
+        const [combo, resultId] = recipeString.split('=');
+        const [el1Id, el2Id] = combo.split('+');
+
+        const el1Name = gameState.elementData[el1Id]?.name || gameState.baseElements[el1Id]?.name;
+        const el2Name = gameState.elementData[el2Id]?.name || gameState.baseElements[el2Id]?.name;
+        const resultName = gameState.elementData[resultId]?.name;
+
+        const li = document.createElement('li');
+        li.textContent = `[${el1Name}] + [${el2Name}] = [${resultName}]`;
+        discoveryTreeContainer.appendChild(li);
     });
 }
 
@@ -85,6 +121,7 @@ function handleDrop(e) {
         const droppedOnId = dropTargetElement.id;
         const resultId = checkForCombination(draggedElementId, droppedOnId);
         if (resultId) {
+            successSound.play();
             console.log(`New discovery: ${gameState.elementData[resultId].name}`);
             addDiscoveredElement(resultId);
             renderElements(); // Re-render to add new element to compendium
@@ -99,6 +136,8 @@ function handleDrop(e) {
             }
 
             saveGame();
+        } else {
+            failSound.play();
         }
         // Don't move the element, just check for combination
         return;
@@ -126,15 +165,24 @@ function clearCraftingArea() {
     elementsInCrafting.forEach(el => el.remove());
 }
 
+function showHint() {
+    const hint = getHint();
+    alert(hint);
+}
+
 // --- Initialization ---
 async function initialize() {
+    // Add event listeners
     craftingArea.addEventListener('dragover', handleDragOver);
     craftingArea.addEventListener('dragleave', handleDragLeave);
     craftingArea.addEventListener('drop', handleDrop);
     clearCraftingBtn.addEventListener('click', clearCraftingArea);
+    hintBtn.addEventListener('click', showHint);
 
-    await loadGame();
-    renderElements();
+    // Load all necessary data before rendering
+    await loadGameContent(); // 1. Load recipes and element data
+    await loadGame();        // 2. Load player's saved progress
+    renderElements();        // 3. Render the UI
 }
 
 // Start the application

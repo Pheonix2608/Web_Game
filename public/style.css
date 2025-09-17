@@ -37,12 +37,34 @@ header {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             "crafting crafting"
-            "elements compendium";
+            "elements compendium"
+            "tree tree";
     }
 }
 
 .elements-section { grid-area: elements; }
 .compendium-section { grid-area: compendium; }
+.discovery-tree-section { grid-area: tree; }
+
+/* --- Discovery Tree --- */
+.discovery-tree-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.discovery-tree {
+    list-style: none;
+    padding-left: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1em;
+}
+
+.discovery-tree li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
 
 /* --- Crafting Area --- */
 .crafting-area {
@@ -81,20 +103,30 @@ header {
     color: #555;
 }
 
-.clear-btn {
+.clear-btn, .hint-btn {
     padding: 5px 15px;
     font-size: 0.9em;
     font-weight: 500;
     color: #fff;
-    background-color: #6c757d;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-left: 10px;
 }
 
+.clear-btn {
+    background-color: #6c757d;
+}
 .clear-btn:hover {
     background-color: #5a6268;
+}
+
+.hint-btn {
+    background-color: #007bff;
+}
+.hint-btn:hover {
+    background-color: #0069d9;
 }
 
 .crafting-area > span {
