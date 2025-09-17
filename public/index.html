@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alchemical Evolution</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Alchemical Evolution</h1>
+        <p>Drag elements onto each other to discover new ones!</p>
+    </header>
+    <main class="game-container">
+        <div id="crafting-area" class="crafting-area">
+            <p>Crafting Area</p>
+            <span>Drop elements here or on top of each other.</span>
+        </div>
+        <div class="elements-section">
+            <h2>Elements</h2>
+            <div id="elements-container" class="elements-grid">
+                <!-- Base elements will be rendered here by JavaScript -->
+            </div>
+        </div>
+        <div class="compendium-section">
+            <h2>Compendium</h2>
+            <p>All discovered elements appear here.</p>
+            <div id="compendium-container" class="elements-grid">
+                <!-- Discovered elements will be rendered here -->
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

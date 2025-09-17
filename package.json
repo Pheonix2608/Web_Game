@@ -1,0 +1,20 @@
+{
+  "name": "alchemical-evolution",
+  "version": "1.0.0",
+  "description": "A simple drag-and-drop element discovery game.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "game",
+    "vanilla-js",
+    "node"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
