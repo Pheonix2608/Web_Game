@@ -37,12 +37,34 @@ header {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             "crafting crafting"
-            "elements compendium";
+            "elements compendium"
+            "tree tree";
     }
 }
 
 .elements-section { grid-area: elements; }
 .compendium-section { grid-area: compendium; }
+.discovery-tree-section { grid-area: tree; }
+
+/* --- Discovery Tree --- */
+.discovery-tree-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.discovery-tree {
+    list-style: none;
+    padding-left: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1em;
+}
+
+.discovery-tree li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
 
 /* --- Crafting Area --- */
 .crafting-area {
@@ -66,12 +88,47 @@ header {
     border-color: #4a6de5;
 }
 
-.crafting-area > p {
+.crafting-area-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.crafting-area-header > p {
     font-weight: bold;
     font-size: 1.2em;
     margin: 0;
     color: #555;
 }
+
+.clear-btn, .hint-btn {
+    padding: 5px 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-left: 10px;
+}
+
+.clear-btn {
+    background-color: #6c757d;
+}
+.clear-btn:hover {
+    background-color: #5a6268;
+}
+
+.hint-btn {
+    background-color: #007bff;
+}
+.hint-btn:hover {
+    background-color: #0069d9;
+}
+
 .crafting-area > span {
     color: #777;
 }
@@ -103,6 +160,29 @@ header {
     background-color: #cce5ff;
 }
 
+/* Animation for newly discovered elements */
+.element-discovered {
+    animation: discovery-flash 0.7s ease-out;
+}
+
+@keyframes discovery-flash {
+    0% {
+        transform: scale(1);
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    50% {
+        transform: scale(1.1);
+        background-color: #d4edda; /* A light green flash */
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    100% {
+        transform: scale(1);
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+}
+
 /* --- Element Containers --- */
 .elements-grid {
     display: grid;
@@ -113,4 +193,63 @@ header {
     border-radius: 8px;
     border: 1px solid #e0e0e0;
     min-height: 100px;
+}
+
+/* --- Element Image and Placeholder Styles --- */
+.element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px;
+    min-height: 80px; /* Ensure a consistent height */
+    text-align: center; /* Center the text for when there's no icon */
+}
+
+.element-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    pointer-events: none; /* Prevent dragging the image itself */
+}
+
+.element-name {
+    font-size: 12px;
+    word-break: break-word;
+}
+
+/* Placeholder styles when an image fails to load */
+.element.placeholder {
+    background-color: #4a4a4a;
+    border: 1px solid #666;
+    color: #fff;
+    position: relative;
+}
+
+.element.placeholder .element-icon {
+    display: none; /* Hide the broken image icon */
+}
+
+.element.placeholder::before {
+    content: attr(data-initials); /* Display the initials */
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+}
+
+/* Adjust name position when placeholder is active */
+.element.placeholder .element-name {
+    margin-top: 4px;
+}
+
+/* --- Exhausted Element Style --- */
+.element.exhausted {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+    opacity: 0.6;
 }

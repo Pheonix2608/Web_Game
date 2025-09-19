@@ -13,7 +13,13 @@
     </header>
     <main class="game-container">
         <div id="crafting-area" class="crafting-area">
-            <p>Crafting Area</p>
+            <div class="crafting-area-header">
+                <p>Crafting Area</p>
+                <div>
+                    <button id="hint-btn" class="hint-btn">Hint</button>
+                    <button id="clear-crafting-btn" class="clear-btn">Clear</button>
+                </div>
+            </div>
             <span>Drop elements here or on top of each other.</span>
         </div>
         <div class="elements-section">
@@ -29,7 +35,14 @@
                 <!-- Discovered elements will be rendered here -->
             </div>
         </div>
+        <div id="discovery-tree-section" class="discovery-tree-section">
+            <h2>Discovery Tree</h2>
+            <p>A history of your discoveries.</p>
+            <ul id="discovery-tree-container" class="discovery-tree">
+                <!-- The discovery tree will be rendered here -->
+            </ul>
+        </div>
     </main>
-    <script src="script.js"></script>
+    <script type="module" src="js/ui.js"></script>
 </body>
 </html>
